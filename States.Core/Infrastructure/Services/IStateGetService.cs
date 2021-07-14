@@ -7,6 +7,9 @@ namespace States.Core.Infrastructure.Services
     {
         IState<TIdentifier, TSharedContext> Get(TIdentifier identifier);
         bool HasState(TIdentifier identifier);
+        IEnumerable<TIdentifier> States { get; }
         
+        IStateGetService<TIdentifier, TSharedContext> As<TSharedContextConverted>()
+            where TSharedContextConverted : TSharedContext;
     }
 }

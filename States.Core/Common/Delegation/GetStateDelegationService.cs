@@ -1,6 +1,7 @@
 ﻿using States.Core.Common.Storage;
 using States.Core.Infrastructure.Services;
 using System;
+using System.Collections.Generic;
 
 namespace States.Core.Common.Delegation
 {
@@ -14,7 +15,10 @@ namespace States.Core.Common.Delegation
     {
         public GetStateDelegationService(Func<IStorageService<TKey, IState<TKey, TValue>>> getStorage) : base(getStorage)
         {
+            
         }
+
+        public IEnumerable<TKey> States => base.GetStorage().MemoryStorage.Keys;
 
         public IState<TKey, TValue> Get(TKey identifier)
         {
@@ -26,6 +30,15 @@ namespace States.Core.Common.Delegation
         public bool HasState(TKey identifier)
         {
             return GetStorage().MemoryStorage.ContainsKey(identifier);
+        }
+
+        public IStateGetService<TKey, TValue> As<TSharedContextConverted>() where TSharedContextConverted : TValue
+        {
+
+            return new GetStateDelegationService<string, TSharedContextConverted>
+            (
+                () => 
+            );
         }
     }
 }

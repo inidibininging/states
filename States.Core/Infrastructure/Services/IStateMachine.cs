@@ -3,7 +3,9 @@ using System.Collections.Generic;
 
 namespace States.Core.Infrastructure.Services
 {
-    public interface IStateMachine<TIdentifier, TSharedContext>
+    public interface IStateMachine<TIdentifier, TSharedContext> :
+        
+        IStateRunner<TIdentifier>
     {
         IStateGetService<TIdentifier, TSharedContext> GetService { get; }
         IStateSetService<TIdentifier, TSharedContext> SetService { get; }
@@ -13,7 +15,6 @@ namespace States.Core.Infrastructure.Services
         TSharedContext SharedContext { get; set; }
         
         IReadOnlyDictionary<TIdentifier, TimeSpan> TimeLog { get; }
-
-        void Run(TIdentifier key);
+        
     }
 }
