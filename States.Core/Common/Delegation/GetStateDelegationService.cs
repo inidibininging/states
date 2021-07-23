@@ -34,10 +34,9 @@ namespace States.Core.Common.Delegation
 
         public IStateGetService<TKey, TValue> As<TSharedContextConverted>() where TSharedContextConverted : TValue
         {
-
-            return new GetStateDelegationService<string, TSharedContextConverted>
+            return new GetStateDelegationService<TKey, TValue>
             (
-                () => 
+                GetStorage
             );
         }
     }

@@ -27,5 +27,13 @@ namespace States.Core.Common.Delegation
         {
             return GetDelegate().ContainsKey(identifier);
         }
+
+	    public IStateGetService<TKey, TValue> As<TSharedContextConverted>() where TSharedContextConverted : TValue
+        {
+
+            return new GenericGetStateDelegationService<TKey, TValue>(
+                GetDelegate
+            );
+        }
     }
 }
