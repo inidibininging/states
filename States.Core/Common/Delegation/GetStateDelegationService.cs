@@ -31,13 +31,5 @@ namespace States.Core.Common.Delegation
         {
             return GetStorage().MemoryStorage.ContainsKey(identifier);
         }
-
-        public IStateGetService<TKey, TValue> As<TSharedContextConverted>() where TSharedContextConverted : TValue
-        {
-            return new GetStateDelegationService<TKey, TValue>
-            (
-                GetStorage
-            );
-        }
     }
 }

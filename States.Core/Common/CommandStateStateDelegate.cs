@@ -16,5 +16,11 @@ namespace States.Core.Common
         {
             Func(machine).Handle(machine);
         }
+        
+        public override string ToString()
+        {
+            
+            return base.ToString();
+        }
     }
 }

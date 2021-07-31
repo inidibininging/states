@@ -4,7 +4,7 @@ using States.Core.Infrastructure.Services;
 
 namespace States.Core.Common.Delegation
 {
-    public class GenericStateMachine<TKey, TValue> 
+    public class DictionaryStateMachine<TKey, TValue> 
         : IStateMachine<TKey, TValue>
     {
         IStateGetService<TKey, TValue> IStateMachine<TKey, TValue>.GetService => GetService;
@@ -13,15 +13,18 @@ namespace States.Core.Common.Delegation
 
         IStateNewService<TKey, TValue> IStateMachine<TKey, TValue>.NewService => NewService;
         
-        private GenericGetStateDelegationService<TKey, TValue> GetService { get; }
-        private GenericSetStateDelegationService<TKey, TValue> SetService { get; }
-        private GenericNewStateDelegationService<TKey, TValue> NewService { get; }
+        private DictionaryGetStateDelegationService<TKey, TValue> GetService { get; }
+        private DictionarySetStateDelegationService<TKey, TValue> SetService { get; }
+        private DictionaryNewStateDelegationService<TKey, TValue> NewService { get; }
 
-        public GenericStateMachine(Dictionary<TKey, IState<TKey,TValue>> memory, Func<TKey> keyGenerator)
+        public DictionaryStateMachine(Dictionary<TKey, IState<TKey,TValue>> memory, Func<TKey> keyGenerator)
         {
-            GetService = new GenericGetStateDelegationService<TKey, TValue>(() => memory);
-            SetService = new GenericSetStateDelegationService<TKey, TValue>(() => memory);
-            NewService = new GenericNewStateDelegationService<TKey, TValue>((() => memory), keyGenerator);
+            GetService = new DictionaryGetStateDelegationService<TKey, TValue>(() => memory);
+            SetService = new DictionarySetStateDelegationService<TKey, TValue>(() => memory,
+                (key, state) => memory[key] = state);
+            NewService = new DictionaryNewStateDelegationService<TKey, TValue>(() => memory, 
+                keyGenerator,
+                (key, state) => memory[key] = state);
         }
         
         public TKey SharedIdentifier { get; private set; }

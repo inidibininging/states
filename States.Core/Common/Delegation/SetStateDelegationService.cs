@@ -16,7 +16,7 @@ namespace States.Core.Common.Delegation
         {
         }
 
-        public bool Set(IState<TKey, TValue> state, TKey identifier)
+        public bool Set(TKey identifier, IState<TKey, TValue> state)
         {
             if (state == null)
                 throw new ArgumentNullException(nameof(state));

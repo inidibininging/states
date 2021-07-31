@@ -7,6 +7,6 @@ namespace States.Core.Infrastructure.Services
     /// <typeparam name="TSharedContext">The context type</typeparam>
     public interface IStateSetService<TIdentifier, TSharedContext>
     {
-        bool Set(IState<TIdentifier, TSharedContext> state, TIdentifier identifier);
+        bool Set(TIdentifier identifier, IState<TIdentifier, TSharedContext> state);
     }
 }
